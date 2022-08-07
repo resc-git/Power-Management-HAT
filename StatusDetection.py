@@ -4,14 +4,17 @@ import RPi.GPIO as GPIO
 import os, time
 
 GPIO.setmode(GPIO.BCM)
+
+print ("Activating pin 20 to enable Power-Management-HAT shutddown.")
 GPIO.setup(20, GPIO.IN)
-GPIO.setup(21, GPIO.OUT)
+
+print ("Telling Power-Management-HAT that Raspberry Pi is running by setting pin21 to High.")
+GPIO.setup (21, GPIO.OUT)
 GPIO.output(21, GPIO.HIGH)
-print ("Raspberry Pi tell Power-Management-HAT that I am running by pin21")
 
 while True:
 	if (GPIO.input(20)):
-		print ("Power-Management-HAT tell Raspberry Pi you need to poweroff by pin20")
-		os.system("sudo shutdown -h now")
+		print ("Power-Management-HAT signaled a shutdown request by setting pin20 to High.")
+		os.system("sudo shutdown -h 120 \"Poser-Management-HAT initiated a system shutdown.\"")
 		break
-	time.sleep(0.5)
+	time.sleep(2.0)
