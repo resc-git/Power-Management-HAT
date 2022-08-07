@@ -45,7 +45,7 @@ set +x
 
 
 ##-------------------------------------------------------------------------------------------------
-## Getting Sleepy Pi to shutdown the Raspberry Pi
+## Installing GPIO monitoring for shutdown
 echo 'Setting up the shutdown...'
 cd ~
 if grep -q 'StatusDetection.py' /etc/rc.local; then
@@ -53,10 +53,10 @@ if grep -q 'StatusDetection.py' /etc/rc.local; then
 else
     mkdir -p /home/pi/bin
     mkdir -p /home/pi/bin/PowerManagementHAT
-    wget https://raw.githubusercontent.com/waveshare/Power-Management-HAT/master/StatusDetection.py
-    mv -f StatusDetection.py /home/pi/bin/PowerManagementHAT
-    sed -i '/exit 0/i python /home/pi/bin/PowerManagementHAT/StatusDetection.py &' /etc/rc.local
-    # echo "python /home/pi/bin/PowerManagementHAT/StatusDetection.py &" | sudo tee -a /etc/rc.local
+    wget https://raw.githubusercontent.com/git-resc/Power-Management-HAT/master/StatusDetection.py
+    mv -f StatusDetection.py /home/pi/PowerManagementHAT
+    sed -i '/exit 0/i /usr/bin/python3 /home/pi/PowerManagementHAT/StatusDetection.py &' /etc/rc.local
+    # echo "/usr/bin/python3 /home/piPowerManagementHAT/StatusDetection.py &" | sudo tee -a /etc/rc.local
 fi
 
 
